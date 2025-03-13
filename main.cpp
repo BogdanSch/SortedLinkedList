@@ -17,7 +17,7 @@ int main()
 	a.removeItem(20);
 	a.removeAt(1);
 	cout << "List a after removals: ";
-	a[0] = 1;
+	a.at(0) = 1;
 	a.addItem(78);
 	a.printList();  // Expected output: [1, 78]
 

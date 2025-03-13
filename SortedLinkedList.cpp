@@ -19,11 +19,11 @@ SortedLinkedList::~SortedLinkedList()
 	}
 }
 
-int& SortedLinkedList::operator[](int index)
+int& SortedLinkedList::at(int index)
 {
 	if (index < 0 || index >= count)
 		throw std::invalid_argument("Received invalid index");
-	else if (head == nullptr)
+	else if (isEmpty())
 		throw std::exception("List is empty");
 
 	int currentIndex = 0;
@@ -45,7 +45,7 @@ void SortedLinkedList::addItem(int item)
 	Node* newNode = new Node(item);
 	Node* current = head;
 
-	if (head == nullptr)
+	if (isEmpty())
 	{
 		head = newNode;
 		count++;
@@ -81,7 +81,7 @@ void SortedLinkedList::removeAt(int index)
 {
 	if (index < 0 || index >= count)
 		throw std::invalid_argument("Received invalid index");
-	else if (head == nullptr)
+	else if (isEmpty())
 		throw std::invalid_argument("List is empty");
 
 	int currentIndex = 0;
@@ -104,7 +104,7 @@ void SortedLinkedList::removeAt(int index)
 
 void SortedLinkedList::removeItem(int item)
 {
-	if (head == nullptr)
+	if (isEmpty())
 		throw std::exception("List is empty");
 
 	Node* current = head;
@@ -121,6 +121,11 @@ void SortedLinkedList::removeItem(int item)
 		previous = current;
 		current = current->getNext();
 	}
+}
+
+bool SortedLinkedList::isEmpty() const
+{
+	return head == nullptr;
 }
 
 void SortedLinkedList::printList()
