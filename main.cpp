@@ -1,6 +1,3 @@
-// SortedLinkedList.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 #include "SortedLinkedList.h"
 
@@ -33,10 +30,16 @@ int main()
 	cout << "List b after removals: ";
 	b.printList();  // Expected output: [25]
 
+	// Test 3: Intersection of lists a and b
+	b.addItem(1);
+	SortedLinkedList c = a.intersection(b);
+	cout << "The result of intersection: ";
+	c.printList(); // Expected output: [1]
 
-	/*SortedLinkedList c;
-	c.intersection(&a, &b);
-	cout << "result of intersection: ";
-	c.printList();*/
-
+	// Test 4:
+	SortedLinkedList d({0, 1, 2, 3, 4, 5});
+	d.addItem(6);
+	d.removeItem(6);
+	d.printList();
+	cout << d.getCount();
 }

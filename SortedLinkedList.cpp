@@ -6,7 +6,15 @@ using std::cout;
 using std::endl;
 using std::string;
 
-SortedLinkedList::SortedLinkedList() : head(nullptr), count(0){}
+SortedLinkedList::SortedLinkedList() : head(nullptr), count(0) {}
+
+SortedLinkedList::SortedLinkedList(vector<int> inputNumbers) : SortedLinkedList()
+{
+	for (size_t i = 0; i < inputNumbers.size(); i++)
+	{
+		addItem(inputNumbers[i]);
+	}
+}
 
 SortedLinkedList::~SortedLinkedList()
 {
@@ -17,6 +25,11 @@ SortedLinkedList::~SortedLinkedList()
 		delete current;
 		current = temp;
 	}
+}
+
+size_t SortedLinkedList::getCount() const
+{
+	return count;
 }
 
 int& SortedLinkedList::at(int index)
@@ -128,6 +141,31 @@ bool SortedLinkedList::isEmpty() const
 	return head == nullptr;
 }
 
+SortedLinkedList SortedLinkedList::intersection(SortedLinkedList& other)
+{
+	SortedLinkedList result;
+
+	Node* current1 = this->head;
+	Node* current2 = other.head;
+
+	while (current1 != nullptr)
+	{
+		while (current2 != nullptr)
+		{
+			if (current1->getItem() == current2->getItem())
+			{
+				result.addItem(current1->getItem());
+				break;
+			}
+			current2 = current2->getNext();
+		}
+		current1 = current1->getNext();
+		current2 = other.head;
+	}
+
+	return result;
+}
+
 void SortedLinkedList::printList()
 {
 	Node* current = head;
@@ -142,9 +180,4 @@ void SortedLinkedList::printList()
 	}
 	cout << "]";
 	cout << endl;
-}
-
-void SortedLinkedList::intersection(SortedLinkedList* L1, SortedLinkedList* L2)
-{
-
 }

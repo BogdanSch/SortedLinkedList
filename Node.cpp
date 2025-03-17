@@ -26,7 +26,6 @@ void Node::setItem(int newItem)
 Node* Node::getNext()
 {
 	return next;
-    //return nullptr;
 }
 
 void Node::setNext(Node* next)
