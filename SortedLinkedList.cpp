@@ -51,24 +51,29 @@ int& SortedLinkedList::at(int index)
 		current = current->getNext();
 		currentIndex++;
 	}
+
+	throw std::exception("Index not found");
 }
 
 void SortedLinkedList::addItem(int item)
 {
 	Node* newNode = new Node(item);
-	Node* current = head;
 
-	if (isEmpty())
+	if (isEmpty() || item < head->getItem())
 	{
+		newNode->setNext(head);
 		head = newNode;
 		count++;
 		return;
 	}
 
-	while (current->getNext() != nullptr)
+	Node* current = head;
+	while (current->getNext() != nullptr && current->getNext()->getItem() < item)
 	{
 		current = current->getNext();
 	}
+
+	newNode->setNext(current->getNext());
 	current->setNext(newNode);
 	count++;
 }
@@ -136,9 +141,56 @@ void SortedLinkedList::removeItem(int item)
 	}
 }
 
+bool SortedLinkedList::contains(int item) const
+{
+	Node* current = head;
+
+	while (current != nullptr && current->getItem() <= item)
+	{
+		if (current->getItem() == item)
+			return true;
+		current = current->getNext();
+	}
+
+	return false;
+}
+
 bool SortedLinkedList::isEmpty() const
 {
 	return head == nullptr;
+}
+
+SortedLinkedList SortedLinkedList::merge(SortedLinkedList& other)
+{
+	SortedLinkedList result;
+
+	Node* current1 = this->head;
+
+	while (current1 != nullptr)
+	{
+		int currentItem = current1->getItem();
+
+		if (!result.contains(currentItem))
+		{
+			result.addItem(current1->getItem());
+		}
+		current1 = current1->getNext();
+	}
+
+	Node* current2 = other.head;
+
+	while (current2 != nullptr)
+	{
+		int currentItem = current2->getItem();
+
+		if (!result.contains(currentItem))
+		{
+			result.addItem(current2->getItem());
+		}
+		current2 = current2->getNext();
+	}
+
+	return result;
 }
 
 SortedLinkedList SortedLinkedList::intersection(SortedLinkedList& other)
